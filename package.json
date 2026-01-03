@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-tipjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhietthanh/nodejs-tipjs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nhietthanh/nodejs-tipjs/issues"
+  },
+  "homepage": "https://github.com/nhietthanh/nodejs-tipjs#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "compression": "^1.8.1",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1"
+  }
+}
