@@ -1,3 +1,4 @@
+require('dotenv').config()
 const compression = require('compression')
 const express = require('express')
 const { default: helmet } = require('helmet')
@@ -10,21 +11,11 @@ app.use(helmet())
 app.use(compression())
 // init db
 require('./dbs/init.mongodb')
+// const {checkOverload} = require('./helpers/check.connect')
+// checkOverload()
 
-const {checkOverload} = require('./helpers/check.connect')
-checkOverload()
 // init routes
-
-
-
-app.get('/',(req,res, next)=>{
-
-    const strCompress = 'Hello Thanh'
-    return res.status(200).json({
-        message:'Wellcome anyone',
-        metadata:strCompress.repeat(10000)
-    })
-})
+app.use('/',require('./routes'))
 
 
 
