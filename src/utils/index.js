@@ -1,9 +1,9 @@
 "use strict";
 
-const _ = require("lodash/pick");
+const pick = require("lodash/pick");
 
 const getInfoData = ({ fileds = [], object = {} }) => {
-  return _.pick(object, fileds);
+  return pick(object, fileds);
 };
 
 module.exports = {

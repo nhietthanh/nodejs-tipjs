@@ -79,7 +79,7 @@ class AccessService {
         return {
           code: 201,
           metadata: {
-            shop: getInfoData({ _id, name, email }, newShop),
+            shop: getInfoData({  fileds:['_id', 'name', 'email'],object:newShop}, ),
             tokens,
           },
         };
