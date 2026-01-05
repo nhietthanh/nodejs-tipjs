@@ -1,39 +1,44 @@
-'use strict'
+"use strict";
 
-const {model,Schema,Types} = require('mongoose')
+const { model, Schema, Types } = require("mongoose");
 
-const DOCUMENT_NAME = 'Shop'
-const COLLECTION_NAME ='Shops'
+const DOCUMENT_NAME = "Shop";
+const COLLECTION_NAME = "Shops";
 
-const shopSchema = new Schema({
-    name:{
-        type:String,
-        trim:true,
-        maxLength:150
+var shopSchema = new Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      maxLength: 150,
     },
-    email:{
-        type:String,
-        unique:true,
-        trim:true
+    email: {
+      type: String,
+      unique: true,
+      trim: true,
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+      type: String,
+      required: true,
     },
-    status:{
-        type:String,
-        enumm:['active', 'inactive'],
-        default:'inactive'
+    status: {
+      type: String,
+      enumm: ["active", "inactive"],
+      default: "inactive",
     },
-    verfify:{
-        type:Schema.Types.Boolean,
-        default:false
+    verfify: {
+      type: Schema.Types.Boolean,
+      default: false,
     },
-    roles:{
-        type:Schema.Types.Boolean,
-        default:false
-    }
-},{
-    timestamps:true,
-    collection:COLLECTION_NAME
-})
+    roles: {
+      type: Array,
+      default: [],
+    },
+  },
+  {
+    timestamps: true,
+    collection: COLLECTION_NAME,
+  }
+);
+
+module.exports = model(DOCUMENT_NAME, shopSchema);
