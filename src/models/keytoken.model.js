@@ -9,12 +9,12 @@ const keyTokenSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      reuired: true,
+      require: true,
       ref: "Shop",
     },
     publicKey: {
       type: String,
-      reuired: true,
+      require: true,
     },
     refreshToken: {
       type: Array,
@@ -22,7 +22,7 @@ const keyTokenSchema = new Schema(
     },
   },
   {
-    collation: COLLECTION_NAME,
+    collection: COLLECTION_NAME,
     timestamps: true,
   }
 );
