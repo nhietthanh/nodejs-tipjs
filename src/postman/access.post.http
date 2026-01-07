@@ -6,6 +6,15 @@ Content-Type:application/json
 x-api-key:b19ac139cbf08794a6428c4dbf6dcc437e9259adaaa68a63cebab92151ca720c7dae4b35ca74c6c49dfc54005af76bbe589915019ab92492ea5d5b9ea9d2cef1
 {
     "name": "abc",
-    "email": "shoptipjs31@gmail.com",
+    "email": "shoptipjs42@gmail.com",
+    "password": "123aaa"
+}
+
+### login
+POST {{url_dev}}/shop/login
+Content-Type:application/json
+x-api-key:b19ac139cbf08794a6428c4dbf6dcc437e9259adaaa68a63cebab92151ca720c7dae4b35ca74c6c49dfc54005af76bbe589915019ab92492ea5d5b9ea9d2cef1
+{
+    "email": "shoptipjs42@gmail.com",
     "password": "123aaa"
 }

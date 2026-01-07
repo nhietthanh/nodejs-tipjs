@@ -2,7 +2,7 @@
 
 const shopModel = require("../models/shop.model");
 
-const finByEmail = async ({
+const findByEmail = async ({
   email,
   select = {
     email: 1,
@@ -16,5 +16,5 @@ const finByEmail = async ({
 };
 
 module.exports = {
-  finByEmail,
+  findByEmail,
 };

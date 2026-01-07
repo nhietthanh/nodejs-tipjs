@@ -49,4 +49,5 @@ class CREATE extends SuccessReponse {
 module.exports = {
   CREATE,
   OK,
+  SuccessReponse,
 };

@@ -9,8 +9,9 @@ const { getInfoData } = require("../utils");
 const {
   BadRequestError,
   ConflicRequestError,
+  AuthFailureError,
 } = require("../core/error.response");
-const { finByEmail } = require("./shop.service");
+const { findByEmail } = require("./shop.service");
 
 const RoleShop = {
   SHOP: "SHOP",
@@ -20,11 +21,55 @@ const RoleShop = {
 };
 
 class AccessService {
+  /*
+    1 - check email in dbs
+    2- match password
+    3- create AI RT and save
+    4- genarate tokens
+    5- get data return login
+  */
   static login = async ({ email, password, refreshToken = null }) => {
-    const foundShop = await finByEmail({ email });
+    // 1
+    const foundShop = await findByEmail({ email });
     if (!foundShop) throw new BadRequestError("Shop not registerted!");
+    // 2
+    const match = await bcrypt.compare(password, foundShop.password);
 
-    const match = bcrypt.compare(password, foundShop.password);
+    if (!match) throw new AuthFailureError("Auuthentication error");
+
+    // 3
+    // create privateKey, publicKey
+    const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+      modulusLength: 4096,
+      publicKeyEncoding: {
+        type: "pkcs1",
+        format: "pem",
+      },
+      privateKeyEncoding: {
+        type: "pkcs1",
+        format: "pem",
+      },
+    });
+    // 4 generate tokens
+    const { _id: userId } = foundShop;
+    const tokens = await createTokensPair(
+      { userId, email },
+      privateKey,
+      publicKey
+    );
+
+    await KeyTokenService.createKeyToken({
+      refreshToken: tokens.refreshToken,
+      privateKey,
+      publicKey,
+    });
+    return {
+      shop: getInfoData({
+        fileds: ["_id", "name", "email"],
+        object: foundShop,
+      }),
+      tokens,
+    };
   };
 
   static signUp = async ({ name, email, password }) => {
@@ -58,27 +103,22 @@ class AccessService {
         },
       });
 
-      console.log({ privateKey, publicKey }); //save collection keyStore
-
       const publicKeyString = await KeyTokenService.createKeyToken({
         userId: newShop._id,
         publicKey,
+        privateKey,
       });
 
       if (!publicKeyString) {
         throw new BadRequestError("Error: Shop already registed!");
       }
 
-      const publicKeyObject = crypto.createPublicKey(publicKeyString);
-
-      console.log("publicKeyObject::", publicKeyObject);
-
       // created token pair
 
       const tokens = await createTokensPair(
         { userId: newShop._id, email },
-        publicKeyString,
-        privateKey
+        privateKey,
+        publicKey
       );
 
       return {
