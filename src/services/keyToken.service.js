@@ -2,8 +2,14 @@
 
 const keytokenModel = require("../models/keytoken.model");
 
+const { Types } = require("mongoose");
 class KeyTokenService {
-  static createKeyToken = async ({ userId, privateKey, publicKey }) => {
+  static createKeyToken = async ({
+    userId,
+    refreshToken,
+    privateKey,
+    publicKey,
+  }) => {
     try {
       // level 0
       // const tokens = await keytokenModel.create({
@@ -16,8 +22,8 @@ class KeyTokenService {
       // level xxx
       const filter = { user: userId },
         update = {
-          privateKey,
           publicKey,
+          privateKey,
           refreshTokensUsed: [],
           refreshToken,
         },
@@ -30,8 +36,16 @@ class KeyTokenService {
       );
       return tokens ? tokens.publicKey : null;
     } catch (error) {
-      return error;
+      throw error;
     }
+  };
+
+  static findByUserId = async (userId) => {
+    return await keytokenModel.findOne({ user: Types.ObjectId(userId) }).lean();
+  };
+
+  static removeKeyById = async (id) => {
+    return await keytokenModel.remove(id);
   };
 }
 

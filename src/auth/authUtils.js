@@ -1,10 +1,20 @@
 "use strict";
 
 const JWT = require("jsonwebtoken");
-const createTokensPair = async (payload, publicKey, privateKey) => {
+const { AuthFailureError } = require("../core/error.response");
+const { findByUserId } = require("../services/keyToken.service");
+const asyncHander = require("../helpers/asyncHandler");
+
+const HEADER = {
+  API_KEY: "x-api-key",
+  CLIENT_ID: "x-client-id",
+  AUTHORIZATION: "authorization",
+};
+
+const createTokensPair = async (payload, privateKey, publicKey) => {
   try {
     // accessToken
-    const accessToken = await JWT.sign(payload, publicKey, {
+    const accessToken = await JWT.sign(payload, privateKey, {
       algorithm: "RS256",
       expiresIn: "2d",
     });
@@ -22,11 +32,46 @@ const createTokensPair = async (payload, publicKey, privateKey) => {
         console.log(`decode verify::`, decode);
       }
     });
-    console.log("refreshToken", refreshToken);
     return { accessToken, refreshToken };
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
+
+const authentication = asyncHander(async (req, res, next) => {
+  /*
+  1 - check userId missing??
+  2 - get accessToken
+  3 - verifyToken
+  4 - check user trong dbs?
+  5 - check keyStore with this userId?
+  6 - Ok all => return next() 
+  */
+
+  const userId = requestAnimationFrame.headers[HEADER.CLIENT_ID];
+
+  if (!userId) throw new AuthFailureError("Invalid Request!");
+  // 2
+
+  const keyStore = await findByUserId(userId);
+  if (!keyStore) throw new NotFoundError("NotFound keyStore");
+  // 3
+  const accessToken = requestAnimationFrame.headers[HEADER.AUTHORIZATION];
+  if (!accessToken) throw new NotFoundError("Invalid Request");
+
+  try {
+    const decodeUser = JWT.verify(accessToken, keyStore.publicKey);
+    if (userId !== decodeUser.userId) {
+      throw new AuthFailureError("Invalid Userid");
+    }
+    req.keyStore = keyStore;
+    return next();
+  } catch (error) {
+    throw error;
+  }
+});
 
 module.exports = {
   createTokensPair,
+  authentication,
 };

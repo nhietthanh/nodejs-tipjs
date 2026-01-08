@@ -28,6 +28,14 @@ class AccessService {
     4- genarate tokens
     5- get data return login
   */
+
+  static logout = async ({ keyStore }) => {
+    const delKey = await KeyTokenService.removeKeyById(keyStore._id);
+
+    console.log({ delKey });
+    return delKey;
+  };
+
   static login = async ({ email, password, refreshToken = null }) => {
     // 1
     const foundShop = await findByEmail({ email });
@@ -41,15 +49,16 @@ class AccessService {
     // create privateKey, publicKey
     const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
       modulusLength: 4096,
-      publicKeyEncoding: {
-        type: "pkcs1",
-        format: "pem",
-      },
       privateKeyEncoding: {
         type: "pkcs1",
         format: "pem",
       },
+      publicKeyEncoding: {
+        type: "pkcs1",
+        format: "pem",
+      },
     });
+
     // 4 generate tokens
     const { _id: userId } = foundShop;
     const tokens = await createTokensPair(
@@ -62,6 +71,7 @@ class AccessService {
       refreshToken: tokens.refreshToken,
       privateKey,
       publicKey,
+      userId,
     });
     return {
       shop: getInfoData({
