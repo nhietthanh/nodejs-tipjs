@@ -18,15 +18,14 @@ const apiKey = async (req, res, next) => {
 
     // check objKey
 
-    // const objKey = await findById(key);
-    // console.log("objKey", objKey);
-    // if (!objKey) {
-    //   return res.status(403).json({
-    //     message: "Forbidden Error",
-    //   });
-    // }
+    const objKey = await findById(key);
+    if (!objKey) {
+      return res.status(403).json({
+        message: "Forbidden Error",
+      });
+    }
 
-    // req.objKey = objKey;
+    req.objKey = objKey;
 
     return next();
   } catch (error) {}
@@ -34,18 +33,18 @@ const apiKey = async (req, res, next) => {
 
 const permisstion = (permisstion) => {
   return (req, res, next) => {
-    // if (!req.objKey.permisstions) {
-    //   return res.status(403).json({
-    //     message: "permisstion denied",
-    //   });
-    // }
+    if (!req.objKey.permisstions) {
+      return res.status(403).json({
+        message: "permisstion denied",
+      });
+    }
 
-    // const validPermisstion = req.objKey.permisstions.includes(permisstion);
-    // if (!validPermisstion) {
-    //   return res.status(403).json({
-    //     message: "permisstion denied",
-    //   });
-    // }
+    const validPermisstion = req.objKey.permisstions.includes(permisstion);
+    if (!validPermisstion) {
+      return res.status(403).json({
+        message: "permisstion denied",
+      });
+    }
 
     return next();
   };

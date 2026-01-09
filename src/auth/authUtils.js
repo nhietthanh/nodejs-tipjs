@@ -1,7 +1,7 @@
 "use strict";
 
 const JWT = require("jsonwebtoken");
-const { AuthFailureError } = require("../core/error.response");
+const { AuthFailureError, NotFoundError } = require("../core/error.response");
 const { findByUserId } = require("../services/keyToken.service");
 const asyncHander = require("../helpers/asyncHandler");
 
@@ -48,15 +48,16 @@ const authentication = asyncHander(async (req, res, next) => {
   6 - Ok all => return next() 
   */
 
-  const userId = requestAnimationFrame.headers[HEADER.CLIENT_ID];
+  const userId = req.headers[HEADER.CLIENT_ID];
 
   if (!userId) throw new AuthFailureError("Invalid Request!");
   // 2
-
   const keyStore = await findByUserId(userId);
+  console.log("keyStore", keyStore);
+
   if (!keyStore) throw new NotFoundError("NotFound keyStore");
   // 3
-  const accessToken = requestAnimationFrame.headers[HEADER.AUTHORIZATION];
+  const accessToken = req.headers[HEADER.AUTHORIZATION];
   if (!accessToken) throw new NotFoundError("Invalid Request");
 
   try {
