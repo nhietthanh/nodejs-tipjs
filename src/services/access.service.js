@@ -4,12 +4,13 @@ const shopModel = require("../models/shop.model");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const KeyTokenService = require("./keyToken.service");
-const { createTokensPair } = require("../auth/authUtils");
+const { createTokensPair, verifyJWT } = require("../auth/authUtils");
 const { getInfoData } = require("../utils");
 const {
   BadRequestError,
   ConflicRequestError,
   AuthFailureError,
+  ForbiddenError,
 } = require("../core/error.response");
 const { findByEmail } = require("./shop.service");
 
@@ -21,7 +22,47 @@ const RoleShop = {
 };
 
 class AccessService {
-  static handlerRefreshToken;
+  /*
+  check is token used?
+   */
+  static handlerRefreshToken = async(refreshToken)=>{
+    //check xem token nay da duoc su dung chua? 
+    const foundToken = await KeyTokenService.finByRefreshTokenUsed(refreshToken)
+    if(foundToken){
+      // decode xem may la thang nao?
+      const {userId, email} = await verifyJWT(refreshToken,foundToken.privateKey)
+      console.log({userId, email})
+      // xoa tat ca token trong keyStore
+      await KeyTokenService.deleteKeyById(userId)
+      throw new ForbiddenError('Something wrong happend!! pls relogin')
+    }
+    // No, qua ngon
+    const holderToken = await KeyTokenService.finByRefreshToken(refreshToken)
+    if(!holderToken) throw new AuthFailureError('Shop not registeted!')
+    
+      // verifyToken
+      const {userId, email} = await verifyJWT(refreshToken, holderToken.privateKey)
+      console.log(`[2]---`,{userId,email})
+      // check Userid
+      const foundShop = await findByEmail({email})
+      if(!foundShop) throw new AuthFailureError('Shop not registeted!')
+        // create 1 cap moi
+
+      const tokens = await createTokensPair({userId,email}, holderToken.privateKey, holderToken.publicKey)
+      // update token
+      await  holderToken.updateOne({
+        $set:{
+          refreshToken:tokens.refreshToken
+        },
+        $addToSet:{
+          refreshTokensUsed:refreshToken //da duoc su dung de lay token moi roi  
+        }
+      })
+      return{
+        user:{userId,email},
+        tokens
+      }
+  }
 
   /*
     1 - check email in dbs
