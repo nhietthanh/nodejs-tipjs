@@ -3,7 +3,7 @@
 ### signup
 POST {{url_dev}}/shop/signup
 Content-Type:application/json
-x-api-key:ac7e677ca18654d7c4b64b6b8a556fad6705da6172a61158995a1072f589922f18ded4972ff84d26401fda6dd0f59d0fba547dac70d5bb1abe4ba7a64ea4ef42
+x-api-key:eb08125dd18fb7d7f4084d3a48913be0eb980098b9689e18f96b9ab010c4143f91fcaa416ec8a5a92ab1a3021686f710aa7284ec60e2cd1ef549319ce291b5f9
 {
     "name": "abc",
     "email": "shoptipjs45@gmail.com",
