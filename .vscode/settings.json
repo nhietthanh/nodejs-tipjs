@@ -1,4 +1,10 @@
 {
-  "github.copilot.chat.agent.currentEditorContext.enabled": false,
-  "editor.inlineSuggest.enabled": false
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  "eslint.validate": ["javascript", "typescript", "typescriptreact", "javascriptreact"]
 }

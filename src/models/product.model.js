@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const DOCUMENT_NAME = "Product";
-const COLLECTION_NAME = "Products";
+const DOCUMENT_NAME = 'Product';
+const COLLECTION_NAME = 'Products';
 
 const productSchema = new Schema(
   {
@@ -15,9 +15,9 @@ const productSchema = new Schema(
     product_type: {
       type: String,
       require: true,
-      enum: ["Electronics", "Clothing", "Furniture"],
+      enum: ['Electronics', 'Clothing', 'Furniture'],
     },
-    product_shop: { type: Schema.Types.ObjectId, ref: "Shop" },
+    product_shop: { type: Schema.Types.ObjectId, ref: 'Shop' },
     product_attributes: { type: Schema.Types.Mixed, require: true },
   },
   {
@@ -35,11 +35,11 @@ const clothingSchema = new Schema(
     material: String,
     product_shop: {
       type: Schema.Types.ObjectId,
-      ref: "Shop",
+      ref: 'Shop',
     },
   },
   {
-    collation: "clothes",
+    collation: 'clothes',
     timestamps: true,
   }
 );
@@ -52,17 +52,34 @@ const electronicSchema = new Schema(
     color: String,
     product_shop: {
       type: Schema.Types.ObjectId,
-      ref: "Shop",
+      ref: 'Shop',
     },
   },
   {
-    collation: "electronics",
+    collation: 'electronics',
+    timestamps: true,
+  }
+);
+
+const furnitureSchema = new Schema(
+  {
+    brand: { type: String, require: true },
+    size: String,
+    material: String,
+    product_shop: {
+      type: Schema.Types.ObjectId,
+      ref: 'Shop',
+    },
+  },
+  {
+    collation: 'furnitures',
     timestamps: true,
   }
 );
 
 module.exports = {
   product: model(DOCUMENT_NAME, productSchema),
-  clothing: model("Clothing", clothingSchema),
-  electronic: model("Electronics", electronicSchema),
+  clothing: model('Clothing', clothingSchema),
+  electronic: model('Electronics', electronicSchema),
+  furniture: model('Furniture', furnitureSchema),
 };
