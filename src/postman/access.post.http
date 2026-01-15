@@ -13,7 +13,7 @@ x-api-key:eb08125dd18fb7d7f4084d3a48913be0eb980098b9689e18f96b9ab010c4143f91fcaa
 ### login
 POST {{url_dev}}/shop/login
 Content-Type:application/json
-x-api-key:e9e70d7ea217b2c95097dcf5abb8c4f38597d5d70507b90ce67b8aeab97252c192cad97c75d7bb2ced81ffadc37ddbeeb0b3712c3960f740a51ab0ca6361c1c8
+x-api-key:898b577b38e06ef21e217ed76ad72af097fd1f4d1d7d9ac15fafc33252144012c23c6f8fa56bbc7c574493a96f5f6a2c6e167f168bb8f1c5c88ba67ef48147b6
 {
     "email": "shoptipjs45@gmail.com",
     "password": "123aaa"

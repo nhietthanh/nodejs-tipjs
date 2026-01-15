@@ -15,20 +15,19 @@ x-api-key:1566c3f87feee07219c54e078e223976466ae9723ba0ab6a238d838f65d56899f2d91e
 ### product
 POST {{url_dev}}/product
 Content-Type:application/json
-x-api-key:8f183b32e6fb7c870fd5e967f61dfcf91ff4331e758ab71e37b93f3a1e78709375827893d2a24e737164771dad8458230b1b75cd691627e823ddf447f4c6ca37
+x-api-key:9a75385a235a11b9081d9cbf5994d9a0b3b43907382bddfcc9e540513a4905f1d5b82520090e8332b53695ff2c23ab07f3430fe8d8738b32a7761d43c5d873df
 x-client-id:696723da11d5ec5851bacb95
-authorization:eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTY3MjNkYTExZDVlYzU4NTFiYWNiOTUiLCJlbWFpbCI6InNob3B0aXBqczQ1QGdtYWlsLmNvbSIsImlhdCI6MTc2ODM2NzA2NiwiZXhwIjoxNzY4NTM5ODY2fQ.TFXjdjt9e-nv68fnpi0oG-JIemZVYpUSVsR_l1Qvw64Qp3kte_fcn6x6wahb9k2fpkB8_2Iw-177X7Kkz7zEGPKueuE-HJMxLN6JYc2MR6vsCpFsK2DbhUnTv2hJgR5zn47huebrb2_ukmTuMSAijDXHjskYSiSHrTItBN-8HaP6TWJXDA4Ci7OYRIY5hMJUgTA1MDJMz2S03Cc1WfaXIDjfT0ImQsQo6rYcBk-EMPT3eQGlxPGV4YcgkTB_nkeRRefbDY5gY0ycDp7Yld33TK8fIOiTzG4AsP8h5ObicgGeNzaEIa65rc3aEktXg31sONicw3TcI5Vis4JVV57RnKUVCb1lE3A1J7bNNfAnqFDBTsC9dHjd6Bi1lUDqlgWeZzCupBC_bwqBs5zKZLz_t30tNEXgr7UGIyK2SQF94lYFWPr-Q2iAQWsGPqJvGoFdeWG4XpgF5Lx4vKMmbtFAKeLA3AyouV7ZvmD2-V-Ct-08ayEAnDaaC5fQA686lEnlvSF35HDZ_EPOVYVM20ggcTCYsXHDbZEpjmxukKFyI5ocM8lyc9nTI_4yBUefJ78pbw-wUs5yAhpDbml3D2Y_skyxL7HVKZIDU5F-RFFGv5aGLlyMUGJvUJlFFRT3udgoFe44EevlEj9CBznQKvtCWqPZUnX-WEeh61OFcOLXjAs
+authorization:eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTY3MjNkYTExZDVlYzU4NTFiYWNiOTUiLCJlbWFpbCI6InNob3B0aXBqczQ1QGdtYWlsLmNvbSIsImlhdCI6MTc2ODQ2ODIwMywiZXhwIjoxNzY4NjQxMDAzfQ.UAzQu2z6jXkOTjPx66glMqPnWbyeLNgBjTYMQMOse2ooUFJlp7MOo00BLMFTF9eawvNnhIMJnhWnnke6xiqeelBuxxA7VAvK2tQmgt0KqzTmtTjgU6wP9pldjw_a89-o8euhuCX5d1RgL6H9otjIToiEQwUyttt4Wx9Kpp8PkiwasoL1QwxsllWUcnMCr-FkJ5I4r5AmBaT3J5CcNdKyZoh0D1MyLVIEJfL3HM2rfuwzZkM3PlRqlPb0ZbA0HdqTvs_lTE3Y0C6hTfd7obiWhoKMSP-wfgF0UY0Sw2rNyY9KS7mMcHVLFgE7wNXHq0m3NNUWABMJ4huZWVB2FX9RBO-Z1G9Xe5ArHvWva6O4Q6DusnNqZjeg0KPjZfJK36a1huo9j1_6Xeuu3pAYS80J_gUjr6pfsgEFBtButuGcGOZtTfoAkruEQrqshNzF7qmYABPq8lSUyiJ_bCKdgd6OlTcoVObRvEhPi-Tx6PnWCjUCAlV9MToI0VcI7g8NW3i1pUNxcFmyQy0zXyV2mZZi3w4MCQgl5tBwBhxZX76c7aBFWU_GXpFjrGtstSfZLAtbvJavTp1bSNOZD2w-CqlGNAGm_bVTUgTuc818IrleaRHYwZ8JDcmovGq65supt68pylwT7XRa51xYPAobik5QTFSjG9MsFcP7Yw4zWrdccO0
 {
-    "product_name":"Iphone 17 promax",
-    "product_description":"Dien thoai 1TB VIP",
+    "product_name":"Iphone 24 promax",
+    "product_description":"New product",
     "product_thumb":"product thumb",
     "product_price":20000000,
     "product_quantity":8,
-    "product_type":"Clothing",
-    "product_shop":"6963a0aa1c9fccaf14f8b0e6",
+    "product_type":"Electronics",
     "product_attributes":{
-        "brand":"Adidas",
-        "size":"Promax",
-        "material":"Demin"
+        "manufacturer":"Apple 2",
+        "model":"iphone 24",
+        "color":"BLUE 2"
     }
 }

@@ -33,6 +33,10 @@ const clothingSchema = new Schema(
     brand: { type: String, require: true },
     size: String,
     material: String,
+    product_shop: {
+      type: Schema.Types.ObjectId,
+      ref: "Shop",
+    },
   },
   {
     collation: "clothes",
@@ -46,6 +50,10 @@ const electronicSchema = new Schema(
     manufacturermodel: { type: String, require: true },
     model: String,
     color: String,
+    product_shop: {
+      type: Schema.Types.ObjectId,
+      ref: "Shop",
+    },
   },
   {
     collation: "electronics",
