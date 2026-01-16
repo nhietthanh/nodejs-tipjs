@@ -89,7 +89,7 @@ const authenticationV2 = asyncHander(async (req, res, next) => {
   if (!userId) throw new AuthFailureError('Invalid Request!');
   // 2
   const keyStore = await findByUserId(userId);
-  console.log('keyStore', keyStore);
+  // console.log('keyStore', keyStore);
 
   if (!keyStore) throw new NotFoundError('NotFound keyStore');
   // 3
@@ -119,6 +119,7 @@ const authenticationV2 = asyncHander(async (req, res, next) => {
       throw new AuthFailureError('Invalid Userid');
     }
     req.keyStore = keyStore;
+    req.user = decodeUser;
     return next();
   } catch (error) {
     throw error;

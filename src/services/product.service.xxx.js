@@ -2,24 +2,55 @@
 
 const { BadRequestError } = require('../core/error.response');
 const { clothing, electronic, product, furniture } = require('../models/product.model');
+const {
+  findAllDraftsForShop,
+  publishProductByShop,
+  findAllPublishForShop,
+  unPublishProductByShop,
+  searchProductByUser,
+} = require('../models/repositories/product.repo');
 
 // define Factory class to create product
 class ProductFactory {
-  /*
-    type: 'Clothing',
-    payload
-  */
-
   static productRegistry = {}; //key-class
+
   static registerProductType(type, classRef) {
     ProductFactory.productRegistry[type] = classRef;
   }
 
   static async createProduct(type, payload) {
     const productClass = ProductFactory.productRegistry[type];
-    if (!product_type) throw new BadRequestError(`Invalid Product Types ${type}`);
+    if (!productClass) throw new BadRequestError(`Invalid Product Types ${type}`);
 
     return new productClass(payload).createProduct();
+  }
+
+  // PUT //
+
+  static async publishProductByShop({ product_shop, product_id }) {
+    return await publishProductByShop({ product_id, product_shop });
+  }
+
+  static async unPublishProductByShop({ product_shop, product_id }) {
+    return await unPublishProductByShop({ product_id, product_shop });
+  }
+
+  // END PUT //
+
+  // query
+
+  static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
+    const query = { product_shop, isDraft: true };
+    return await findAllDraftsForShop({ query, limit, skip });
+  }
+
+  static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
+    const query = { product_shop, isPublished: true };
+    return await findAllPublishForShop({ query, limit, skip });
+  }
+
+  static async searchProducts({ keySearch }) {
+    return await searchProductByUser({ keySearch });
   }
 }
 
@@ -81,6 +112,8 @@ class Furniture extends Product {
 }
 
 // register product types
-ProductFactory.registerProductType('electronics', Electronics);
+ProductFactory.registerProductType('Clothing', Clothing);
+ProductFactory.registerProductType('Furniture', Furniture);
+// add more
 
 module.exports = ProductFactory;

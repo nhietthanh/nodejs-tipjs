@@ -11,7 +11,6 @@ class AcessController {
     // }).send(res);
     // V2 fixed
 
-    console.log('req.user', req.user);
     new SuccessReponse({
       message: 'Get token success!',
       metadata: await AccessService.handlerRefreshTokenV2({
