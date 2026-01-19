@@ -7,6 +7,8 @@ const asyncHander = require('../../helpers/asyncHandler');
 const router = express.Router();
 
 router.get('/search/:keySearch', asyncHander(productController.getListSearchProduct));
+router.get('', asyncHander(productController.finAllProducts));
+router.get('/:product_id', asyncHander(productController.findProduct));
 
 // authenticate
 router.use(authenticationV2);
