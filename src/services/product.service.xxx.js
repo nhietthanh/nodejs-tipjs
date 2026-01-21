@@ -10,6 +10,7 @@ const {
   searchProductByUser,
   findAllProducts,
   findProduct,
+  updateProductById,
 } = require('../models/repositories/product.repo');
 
 // define Factory class to create product
@@ -27,11 +28,11 @@ class ProductFactory {
     return new productClass(payload).createProduct();
   }
 
-  static async updateProduct(type, payload) {
+  static async updateProduct(type, productId, payload) {
     const productClass = ProductFactory.productRegistry[type];
     if (!productClass) throw new BadRequestError(`Invalid Product Types ${type}`);
 
-    return new productClass(payload).createProduct();
+    return new productClass(payload).updateProduct(productId);
   }
 
   // PUT //
@@ -110,10 +111,8 @@ class Product {
   }
 
   //update product
-  async updateProduct(productId, payload) {
-    return await product.findByIdAndUpdate(productId, payload, {
-      new: true,
-    });
+  async updateProduct(productId, bodyUpdate) {
+    return await updateProductById({ productId, bodyUpdate, model: product });
   }
 }
 
@@ -140,9 +139,7 @@ class Clothing extends Product {
     //2. check xem update cho nao?
     if (objectParams.product_attributes) {
       // update child
-      await clothing.findByIdAndUpdate(productId, objectParams, {
-        new: true,
-      });
+      await updateProductById({ productId, objectParams, model: clothing });
     }
 
     const updateProduct = await super.updateProduct(productId, objectParams);

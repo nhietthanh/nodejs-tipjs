@@ -26,6 +26,18 @@ class ProductController {
     }).send(res);
   };
 
+  // update Product
+
+  updateProduct = async (req, res, next) => {
+    new SuccessReponse({
+      message: 'Update Product success!',
+      metadata: await ProductServiceV2.updateProduct(req.body.product_type, req.params.productId, {
+        ...req.body,
+        product_shop: req.user.userId,
+      }),
+    }).send(res);
+  };
+
   publishProductByShop = async (req, res, next) => {
     new SuccessReponse({
       message: 'publishProductByShop success!',
@@ -94,8 +106,8 @@ class ProductController {
       }),
     }).send(res);
   };
-
-  //END QUERY //
 }
+
+//END QUERY //
 
 module.exports = new ProductController();
