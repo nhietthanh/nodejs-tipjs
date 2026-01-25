@@ -2,6 +2,7 @@
 
 const { BadRequestError } = require('../core/error.response');
 const { clothing, electronic, product, furniture } = require('../models/product.model');
+const { insertInventory } = require('../models/repositories/inventory.repo');
 const {
   findAllDraftsForShop,
   publishProductByShop,
@@ -12,6 +13,7 @@ const {
   findProduct,
   updateProductById,
 } = require('../models/repositories/product.repo');
+const { removeUndefineObject, updateNestedObjectParser } = require('../utils');
 
 // define Factory class to create product
 class ProductFactory {
@@ -107,11 +109,25 @@ class Product {
 
   // create new product
   async createProduct(product_id) {
-    return await product.create({ ...this, _id: product_id });
+    const newProduct = await product.create({ ...this, _id: product_id });
+    if (newProduct) {
+      console.log('this.product_quantity', {
+        productId: newProduct._id,
+        shopId: this.product_shop,
+        stock: this.product_quantity,
+      });
+      await insertInventory({
+        productId: newProduct._id,
+        shopId: this.product_shop,
+        stock: this.product_quantity,
+      });
+    }
+    return newProduct;
   }
 
   //update product
   async updateProduct(productId, bodyUpdate) {
+    console.log('bodyUpdate:::::', bodyUpdate);
     return await updateProductById({ productId, bodyUpdate, model: product });
   }
 }
@@ -135,14 +151,20 @@ class Clothing extends Product {
     */
 
     // 1. remove attr has null underfined
-    const objectParams = this;
+    const objectParams = removeUndefineObject(this);
     //2. check xem update cho nao?
     if (objectParams.product_attributes) {
       // update child
-      await updateProductById({ productId, objectParams, model: clothing });
+      await updateProductById({
+        productId,
+        bodyUpdate: updateNestedObjectParser(objectParams.product_attributes),
+        model: clothing,
+      });
     }
-
-    const updateProduct = await super.updateProduct(productId, objectParams);
+    const updateProduct = await super.updateProduct(
+      productId,
+      updateNestedObjectParser(objectParams)
+    );
     return updateProduct;
   }
 }
