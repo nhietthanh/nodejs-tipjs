@@ -21,7 +21,7 @@ const discountSchema = new Schema(
     },
     discount_value: {
       type: Number,
-      require: true, // 10.000đ 10%
+      require: true, // 10.000đ, 10%
     },
     discount_code: {
       type: String,
